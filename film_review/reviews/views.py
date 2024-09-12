@@ -1,3 +1,7 @@
 from django.shortcuts import render
 
-# Create your views here.
+from reviews.models import Review
+
+def review_list(request):
+    reviews = Review.objects.filter(status=Review.Status.PUBLISHED)
+    return render(request, "reviews/list.html", {"reviews": reviews})

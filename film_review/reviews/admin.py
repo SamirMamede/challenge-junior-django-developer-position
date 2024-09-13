@@ -5,3 +5,4 @@ from .models import Review
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ["title", "published_at", "author", "rating"]
     list_filter = ["author", "status","rating"]
+    search_fields = ["title", "author__username"]

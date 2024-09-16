@@ -7,4 +7,5 @@ def review_list(request):
     return render(request, "reviews/list.html", {"reviews": reviews})
 
 def review_datail(request, id):
-    pass
+    review = Review.objects.get(id=id)
+    return render(request, "reviews/detail.html", {"review": review})

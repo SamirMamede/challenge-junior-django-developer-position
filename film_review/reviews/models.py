@@ -2,6 +2,10 @@ from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import User
 
+class PublishedManager(models.Manager):
+    def get_queryset(self) -> models.QuerySet:
+        return super().get_queryset().filter(status=Review.Status.PUBLISHED)
+
 class Review(models.Model):
     class Status(models.IntegerChoices):
         DRAFT = (1, "Draft")
@@ -23,6 +27,9 @@ class Review(models.Model):
     published_at = models.DateTimeField(default=timezone.now)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    objects = models.Manager()
+    published = PublishedManager()
 
     def __str__(self) -> str:
         return self.title

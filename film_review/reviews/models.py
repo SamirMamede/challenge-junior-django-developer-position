@@ -31,5 +31,10 @@ class Review(models.Model):
     objects = models.Manager()
     published = PublishedManager()
 
+    def get_absolute_url(self):
+        from django.urls import reverse
+
+        return reverse("reviews:review_detail", args=[self.id])
+
     def __str__(self) -> str:
         return self.title

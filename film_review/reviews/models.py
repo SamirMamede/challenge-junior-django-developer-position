@@ -20,6 +20,7 @@ class Review(models.Model):
         EXCEPTIONAL = (6, "Exceptional")
 
     title = models.CharField(max_length=200)
+    slugified_title = models.SlugField(max_length=200, unique_for_date="published_at")
     status = models.IntegerField(choices=Status.choices, default=Status.DRAFT)
     body = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)

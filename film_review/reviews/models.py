@@ -35,7 +35,10 @@ class Review(models.Model):
     def get_absolute_url(self):
         from django.urls import reverse
 
-        return reverse("reviews:review_detail", args=[self.id])
+        return reverse(
+            "reviews:review_detail", 
+            args=[self.published_at.year, self.published_at.month, self.published_at.day, self.slugified_title],
+        )
 
     def __str__(self) -> str:
         return self.title

@@ -1,12 +1,16 @@
 from django.shortcuts import get_object_or_404, render
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from reviews.models import Review
 
 def review_list(request):
     reviews = Review.published.all()
     paginator = Paginator(reviews, 4)
     page_number = request.GET.get("page", 1)
-    reviews_page = paginator.page(page_number)
+
+    try:
+        reviews_page = paginator.page(page_number)
+    except (PageNotAnInteger, EmptyPage):
+        reviews_page = paginator.page(1)
 
     return render(request, "reviews/list.html", {"reviews_page": reviews_page})
 

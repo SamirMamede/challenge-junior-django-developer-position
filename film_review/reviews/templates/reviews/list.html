@@ -38,4 +38,32 @@
       </div>
     </div>
   {% endfor %}
+
+  <nav aria-label="Page Navigation Example">
+    <ul class="pagination">
+      {% if reviews_page.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ reviews_page.previous_page_number }}" aria-label="Anterior">
+          <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Anterior</span>
+        </a>
+      </li>
+      {% endif %}
+
+      <li class="page-item active">
+        <span class="page-link">
+          Página {{ reviews_page.number }} de {{ reviews_page.paginator.num_pages }}
+        </span>
+      </li>
+
+      {% if reviews_page.has_next %}
+        <a class="page-link" href="?page={{ reviews_page.next_page_number }}" aria-label="Próximo">
+          <span aria-hidden="true">&raquo;</span>
+          <span class="sr-only">Próximo</span>
+        </a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+
 {% endblock %}

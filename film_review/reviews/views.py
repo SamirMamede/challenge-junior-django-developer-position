@@ -9,7 +9,7 @@ def review_list(request):
 
     try:
         reviews_page = paginator.page(page_number)
-    except (PageNotAnInteger, EmptyPage):
+    except (EmptyPage, PageNotAnInteger):
         reviews_page = paginator.page(1)
 
     return render(request, "reviews/list.html", {"reviews_page": reviews_page})

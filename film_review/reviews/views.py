@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from reviews.models import Review
+from .forms import CommentForm
 
 def review_list(request):
     reviews = Review.published.all()
@@ -15,6 +16,7 @@ def review_list(request):
     return render(request, "reviews/list.html", {"reviews_page": reviews_page})
 
 def review_datail(request, year, month, day, slugified_title):
+    form = CommentForm()
     review = get_object_or_404(
         Review.published, 
         published_at__year=year, 
@@ -24,4 +26,4 @@ def review_datail(request, year, month, day, slugified_title):
     )
 
     
-    return render(request, "reviews/detail.html", {"review": review})
+    return render(request, "reviews/detail.html", {"review": review, "form": form})

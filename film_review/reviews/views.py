@@ -1,7 +1,8 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.http import HttpResponseRedirect
+from django.http import HttpRequest
 from django.views.decorators.http import require_POST
+from django.contrib import messages
 from reviews.models import Review, Comment
 from .forms import CommentForm
 
@@ -38,6 +39,7 @@ def add_comment(request, review_id):
         comment: Comment = form.save(commit=False)
         comment.review = review
         comment.save()
+        messages.success(request, "Your comment was added successfully!")
         return redirect(review)
     else:
         return render(request, "reviews/detail.html", {"review": review, "form": form})

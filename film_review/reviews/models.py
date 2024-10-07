@@ -31,6 +31,7 @@ class Review(models.Model):
 
     objects = models.Manager()
     published = PublishedManager()
+    comments: models.Manager["Comment"] 
 
     def get_absolute_url(self):
         from django.urls import reverse
@@ -44,7 +45,7 @@ class Review(models.Model):
         return self.title
 
 class Comment(models.Model):
-    review = models.ForeignKey(Review, on_delete=models.CASCADE)
+    review = models.ForeignKey(Review, on_delete=models.CASCADE, related_name="comments")
     user_name = models.CharField(max_length=200)
     user_email = models.EmailField()
     message = models.TextField()
